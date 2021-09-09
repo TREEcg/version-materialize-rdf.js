@@ -10,18 +10,23 @@ An example:
      ex:linkToOtherObject :Bv1 ;
      rdfs:label "A v0.0.1".
 :Bv1 dcterms:isVersionOf :B ;
-    dcterms:created "2021-05-05T11:00:00Z" .
+     rdfs:label "B v0.0.1" ;
+     dcterms:created "2021-05-05T11:00:00Z" .
 ``` 
 
 Should be translated to:
 ```turtle
 :A rdfs:label "A v0.0.1" ;
    dcterms:hasVersion :Av1 ;
-   ex:linkToOtherObject :B ;
-   dcterms:modified "2021-10-05T11:00:00Z" .
+   ex:linkToOtherObject :B .
 
-:B dcterms:modified "2021-05-05T11:00:00Z" ;
-   dcterms:hasVersion :Bv1 ;
+:Av1 dcterms:created "2021-10-05T11:00:00Z" .
+
+:B  dcterms:hasVersion :Bv1 ;
+    rdfs:label "Bv0.0.1" .
+
+:Bv1 dcterms:created "2021-05-05T11:00:00Z" .
+
    
 ```
 
@@ -55,6 +60,7 @@ In the original data we’ll have a triple that looks like this:
 
  * It searches for a namenode and literal of the configurable versionOf and timestamp properties in iterations
  * It swaps all instances of versionId with the objectId
- * It changeds`dcterms:hasVersionOf` with `dcterms:hasVersion`
- * If `dcterms:created` was used in the timestampProperty, it will change the predicate to `dcterms:modified`
+ * It changes`dcterms:hasVersionOf` with `dcterms:hasVersion`
+ * It keeps the timestamp predicate and literal on the object of the `dcterms:hasVersion` object
  * It puts everything in a graph called `<versionId>`
+ * A triple is added stating that the graph `<versionId>` was `prov:generatedAtTime` the timestamp
