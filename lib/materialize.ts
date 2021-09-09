@@ -1,34 +1,64 @@
 import * as RDF from "@rdfjs/types";
-import { DataFactory, Quad } from 'rdf-data-factory';
+import { DataFactory } from 'rdf-data-factory';
 
+export interface IMaterializeOptions {
+    versionOfProperty: RDF.NamedNode;
+    timestampProperty: RDF.NamedNode;
+}
 
-export default class {
-    public static materialize (quads: Array<RDF.Quad>, options: any): Array<RDF.Quad> {
-        let factory = new DataFactory();
-        //First, find the is version of object
-        let versionOf : RDF.NamedNode;
-        if (options.versionOfProperty)
-            versionOf = options.versionOfProperty;
-        else 
-            versionOf = factory.namedNode('http://purl.org/dc/terms/isVersionOf');
+export const materialize = (quads: Array<RDF.Quad>, options: IMaterializeOptions): Array<RDF.Quad> => {
+    const objectIdMap: Map<string, RDF.NamedNode> = new Map();
+    const factory: RDF.DataFactory = new DataFactory();
 
-        let objectIdMap: Map<string, RDF.Term>;
-        for (let quad of quads) {
-            if (quad.predicate.equals(versionOf)) {
-                objectIdMap[quad.subject.value] = quad.object;
-            }
-        }
-        if (objectIdMap.size > 0) {
-            //Now loop again through the quads and create a new Quad object
-            let result : Array<RDF.Quad> = [];
-            for (let quad of quads) {
-                result.push (TODO));
-            }
-
-        } else {
-            //No materialization possible, just return the existing triples
-            return quads;
+    for (let quad of quads) {
+        if (quad.predicate.equals(options.versionOfProperty)) {
+            objectIdMap.set(quad.subject.value, factory.namedNode(quad.object.value));
         }
     }
 
+    if(objectIdMap.size > 0){
+        const result: RDF.Quad[] = [];
+
+        for(let quad of quads){
+            if(quad.predicate.equals(options.versionOfProperty)){
+                result.push(factory.quad(
+                    objectIdMap.get(quad.subject.value)!,
+                    factory.namedNode('http://purl.org/dc/terms/hasVersion'),
+                    factory.namedNode(quad.subject.value),
+                    quad.graph
+                ));
+                continue;
+            }
+
+            if(quad.predicate.equals(options.timestampProperty)){
+                result.push(factory.quad(
+                    objectIdMap.get(quad.subject.value)!,
+                    factory.namedNode('http://purl.org/dc/terms/modified'),
+                    quad.object,
+                    quad.graph
+                ));
+                continue;
+            }
+
+            if (objectIdMap.has(quad.object.value) && quad.subject.value !== quad.object.value) {
+                result.push(factory.quad(
+                    objectIdMap.get(quad.subject.value)!,
+                    quad.predicate,
+                    objectIdMap.get(quad.object.value)!,
+                    quad.graph
+                ));
+                continue;
+            }
+            
+            result.push(factory.quad(
+                objectIdMap.get(quad.subject.value)!,
+                quad.predicate,
+                quad.object,
+                quad.graph
+            ))
+        }
+        return result;
+    } else {
+        return quads;
+    }
 }
