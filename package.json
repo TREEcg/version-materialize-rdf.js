@@ -1,0 +1,33 @@
+{
+  "name": "version-materialize-rdf.js",
+  "version": "0.0.1",
+  "description": "Version Materialize an Array<Quad>",
+  "main": "lib/",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node \\\"../../node_modules/jest/bin/jest.js\\\" ${1}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TREEcg/version-materialize-rdf.js.git"
+  },
+  "keywords": [
+    "RDFjs"
+  ],
+  "author": "Pieter Colpaert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TREEcg/version-materialize-rdf.js/issues"
+  },
+  "homepage": "https://github.com/TREEcg/version-materialize-rdf.js#readme",
+  "dev-dependencies": {
+    "@rdfjs/types": "^1.0.1",
+    "jest": "^27.1.1"
+  },
+  "dependencies": {
+    "rdf-data-factory": "^1.1.0"
+  }
+}
