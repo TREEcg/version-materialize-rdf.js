@@ -22,7 +22,8 @@ const run = async (_url: string) => {
   const factory: RDF.DataFactory = new DataFactory();
   const materializeOptions: IMaterializeOptions = {
     "versionOfProperty": factory.namedNode('http://purl.org/dc/terms/isVersionOf'), // defaults to dcterms:isVersionOf
-    "timestampProperty": factory.namedNode('http://purl.org/dc/terms/created') // defaults to dcterms:created, but there may be good reasons to change this to e.g., prov:generatedAtTime
+    "timestampProperty": factory.namedNode('http://purl.org/dc/terms/created'), // defaults to dcterms:created, but there may be good reasons to change this to e.g., prov:generatedAtTime
+    "addRdfStreamProcessingTriple": true
   };
 
   let LDESClient = newEngine();
