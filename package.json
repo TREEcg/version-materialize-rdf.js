@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Version Materialize an Array<Quad>",
   "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "directories": {
     "lib": "lib",
     "test": "test",
