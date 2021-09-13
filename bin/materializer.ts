@@ -2,7 +2,7 @@ import { newEngine } from '@treecg/actor-init-ldes-client';
 import { IMaterializeOptions, materialize } from '../lib/materialize';
 import { DataFactory } from 'rdf-data-factory';
 import * as RDF from 'rdf-js';
-import { Command, program } from 'commander';
+import { program } from 'commander';
 
 program
   .requiredOption('--url <url>', 'The URL of the Linked Data Event Stream')

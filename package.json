@@ -1,12 +1,24 @@
 {
-  "name": "version-materialize-rdf.js",
+  "name": "@treecg/version-materialize-rdf",
   "version": "0.0.1",
   "description": "Version Materialize an Array<Quad>",
-  "main": "lib/",
+  "main": "index.js",
   "directories": {
     "lib": "lib",
-    "test": "test"
+    "test": "test",
+    "bin" : "bin"
   },
+  "bin": {
+    "version-materialize-rdf" : "./bin/materializer.js"
+  },
+  "files": [
+    "lib/**/*.d.ts",
+    "lib/**/*.js",
+    "bin/**/*.d.ts",
+    "bin/**/*.js",
+    "index.d.ts",
+    "index.js"
+  ],
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
@@ -20,7 +32,7 @@
   "keywords": [
     "RDFjs"
   ],
-  "author": "Pieter Colpaert",
+  "author": "Pieter Colpaert & Dwight Van Lancker",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/TREEcg/version-materialize-rdf.js/issues"

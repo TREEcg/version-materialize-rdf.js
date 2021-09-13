@@ -33,7 +33,7 @@ Should be translated to:
 ## Use it
 
 ```bash
-npm install version-materialize-rdf.js
+npm install @treecg/version-materialize-rdf
 ```
 
 We expect an `Array<Quad>` or an `AsyncIterator<Quad>` at the input, with a targetNode.
@@ -46,7 +46,8 @@ import * as RDF from 'rdf-js';
 const factory: RDF.DataFactory = new DataFactory();
 let options = {
     "versionOfProperty": factory.namedNode('http://purl.org/dc/terms/isVersionOf'), // defaults to dcterms:isVersionOf
-    "timestampProperty" : factory.namedNode('http://purl.org/dc/terms/created') // defaults to dcterms:created, but there may be good reasons to change this to e.g., prov:generatedAtTime
+    "timestampProperty" : factory.namedNode('http://purl.org/dc/terms/created'), // defaults to dcterms:created, but there may be good reasons to change this to e.g., prov:generatedAtTime
+    "addRdfStreamProcessingTriple": true
 };
 console.log(materialize(quads, options));
 ```
