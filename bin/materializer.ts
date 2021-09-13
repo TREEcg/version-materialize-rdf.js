@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { newEngine } from '@treecg/actor-init-ldes-client';
 import { IMaterializeOptions, materialize } from '../lib/materialize';
 import { DataFactory } from 'rdf-data-factory';
