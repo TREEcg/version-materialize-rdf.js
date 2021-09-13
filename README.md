@@ -33,7 +33,7 @@ Should be translated to:
 ## Use it
 
 ```bash
-npm install @treecg/version-materialize-rdf
+npm install @treecg/version-materialize-rdf.js
 ```
 
 We expect an `Array<Quad>` or an `AsyncIterator<Quad>` at the input, with a targetNode.
