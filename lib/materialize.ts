@@ -37,8 +37,12 @@ export const materialize = (quads: Array<RDF.Quad>, options: IMaterializeOptions
             }
 
             if (quad.predicate.equals(options.timestampProperty)) {
-                quad.graph = factory.namedNode(quad.subject.value);
-                result.push(quad);
+                result.push(factory.quad(
+                    quad.subject,
+                    quad.predicate,
+                    quad.object,
+                    factory.namedNode(quad.subject.value)
+                ));
                 continue;
             }
 
