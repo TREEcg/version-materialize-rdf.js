@@ -44,7 +44,7 @@ describe('LDES version materialization library', () => {
         factory.namedNode('http://marineregions.org/mrgid/35127?t=1631005686'),
         factory.namedNode('http://www.w3.org/2000/01/rdf-schema#'),
         factory.literal('Label for version', factory.namedNode('http://www.w3.org/2001/XMLSchema#string'))
-      ),
+      )
     ];
   })
 
@@ -95,25 +95,29 @@ describe('LDES version materialization library', () => {
 
     describe('RDF Stream Processing options', () => {
       test('it should add extra triples if the option is set', () => {
-        const newQuads = [
-          factory.quad(
-            factory.namedNode('http://marineregions.org/mrgid/58739?t=1631005686'),
-            factory.namedNode('http://www.w3.org/ns/prov#generatedAtTime'),
-            factory.literal('2021-09-07T09:08:06Z', factory.namedNode('http://www.w3.org/2001/XMLSchema#dateTime'))
-          ),
-          factory.quad(
-            factory.namedNode('http://marineregions.org/mrgid/35127?t=1631005686'),
-            factory.namedNode('http://www.w3.org/ns/prov#generatedAtTime'),
-            factory.literal('2021-09-07T09:08:06Z', factory.namedNode('http://www.w3.org/2001/XMLSchema#dateTime'))
-          )
-        ];
+        const versionIds: string[] = [];
+        quads.forEach(quad => {
+          if (quad.predicate.equals(options.versionOfProperty)) {
+            versionIds.push(quad.subject.value);
+          }
+        });
+        console.log(versionIds);
 
         options.addRdfStreamProcessingTriple = true;
-        const modifiedQuads = materialize(quads, options);
 
-        // TODO: find a better way to check this.
-        expect(modifiedQuads[5]).toEqual(newQuads[0]);
-        expect(modifiedQuads[6]).toEqual(newQuads[1]);
+        const modifiedQuads = materialize(quads, options);
+        let defaultGraphCounter = 0;
+
+        modifiedQuads.forEach(quad => {
+          // Default Graph
+          if (!quad.graph.value) {
+            defaultGraphCounter++;
+            expect(versionIds).toContain(quad.subject.value);
+            expect(quad.predicate.value).toBe('http://www.w3.org/ns/prov#generatedAtTime')
+          }
+        });
+
+        expect(defaultGraphCounter).toEqual(versionIds.length);
       });
     });
   });
