@@ -61,7 +61,7 @@ In the original data we’ll have a triple that looks like this:
 
  * It searches for a namenode and literal of the configurable versionOf and timestamp properties in iterations
  * It swaps all instances of versionId with the objectId
- * It changes`dcterms:hasVersionOf` with `dcterms:hasVersion`
+ * It changes `dcterms:isVersionOf` with `dcterms:hasVersion`
  * It keeps the timestamp predicate and literal on the object of the `dcterms:hasVersion` object
  * It puts everything in a graph called `<versionId>`
  * A triple is added stating that the graph `<versionId>` was `prov:generatedAtTime` the timestamp
