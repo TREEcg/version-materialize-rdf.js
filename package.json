@@ -1,6 +1,6 @@
 {
   "name": "@treecg/version-materialize-rdf.js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Version Materialize an Array<Quad>",
   "main": "index.js",
   "publishConfig": {
@@ -58,7 +58,7 @@
     "collectCoverage": true
   },
   "dependencies": {
-    "@treecg/actor-init-ldes-client": "^2.3.7",
+    "@treecg/actor-init-ldes-client": "^3.0.1",
     "commander": "^8.1.0",
     "rdf-data-factory": "^1.1.0"
   },
